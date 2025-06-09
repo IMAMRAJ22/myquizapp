@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  {% load static %}
+</head>
+<body>
+    <div class="card" style="width: 1000px; margin-top: 80px; margin-left: 250px;">
+        <div class="card-body"><h2 style="text-align: center;">{{ section.Name }} - Quiz Result</h2>
+        <h2 style="text-align: center;"><p>Your Score: {{ score }} / {{ total }}</p></h2>
+<hr>
+
+{% for r in results %}
+  <p>
+    <strong>Q:</strong> {{ r.quiz }}<br>
+    <strong>Your Answer:</strong> {{ r.your_answer }}<br>
+    <strong>Correct Answer:</strong> {{ r.correct }}<br>
+    <strong>Status:</strong>
+    {% if r.is_correct %}
+      ✅ Correct
+    {% else %}
+      ❌ Incorrect
+    {% endif %}
+  </p>
+  <hr>
+{% endfor %}
+<button class="fire-btn" style="background-color: rgb(251, 107, 174); border: none; border-radius: 40px; width: 100px;">Click Me!</button>
+</div>
+    </div>
+    
+<!-- party popper effect using -->
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+
+    <script>
+      const fireBtn = document.querySelector(".fire-btn");
+
+      fireBtn.addEventListener("click", () => {
+        confetti({
+          particleCount: 300,
+          spread: 90,
+          origin: { x: 1, y: 0.9 },
+        });
+
+        confetti({
+          particleCount: 300,
+          spread: 90,
+          origin: { x: 0, y: 0.9 },
+        });
+      });
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

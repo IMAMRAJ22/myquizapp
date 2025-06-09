@@ -1,0 +1,52 @@
+<!-- quiz.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card" style="width: 1000px; margin-top: 80px; margin-left: 250px;">
+    <div class="card-body">
+      <h2>{{ section.Name }} - Question {{ question_number }} of {{ total }}</h2>
+
+      <p><strong><h4>{{ quiz.text }}</h4></strong></p>
+
+      <form method="post">
+      {% csrf_token %}
+        {% for option in options %}
+        <div><h4>
+          <input type="radio" name="answer" value="{{ option.id }}" id="opt{{ forloop.counter }}">
+          <label for="opt{{ forloop.counter }}">{{ option.option_text }}</label></h4>
+        </div>
+      {% endfor %}
+      
+
+      {% if question_number < total %}
+        <a href="{% url 'quiz_nav' section.id question_number|add:-1 %}">
+          <button class="btn btn-danger" style="margin-left: 100px;">Back</button>
+        </a>
+        <a href="{% url 'quiz_nav' section.id question_number|add:1 %}">
+          <button class="btn btn-primary" style="margin-left: 100px;">Next</button>
+        </a>
+        
+      {% else %}
+          <a href="{% url 'quiz_nav' section.id question_number|add:-1 %}">
+            <button class="btn btn-danger" style="margin-left: 100px;">Back</button>
+          </a>
+          <a href="{% url 'quiz_result' section.id  %}"><button class="btn btn-success" type="submit">Submit</button></a>
+           
+          <p><strong>Quiz Completed!</strong></p>
+
+          <!-- party popper effect using -->
+
+      {% endif %}
+      </form>
+    </div>
+  </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
